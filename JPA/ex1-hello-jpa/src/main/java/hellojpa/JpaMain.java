@@ -11,24 +11,19 @@ public class JpaMain {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();
 
+
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
 
         try {
-//           Member findMemeber =  em.find(Member.class, 1L);
-//           findMemeber.setName("HelloJPA");
 
-//            System.out.println("findMember = " + findMemeber.getId());
-//            System.out.println("findMember = " + findMemeber.getName());
+            Member member = new Member();
+            member.setId(3L);
+            member.setUsername("C");
+            member.setRoleType(RoleType.ADMIN);
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
-
-            for(Member member : result){
-                System.out.println("member.name = "+ member.getName());
-            }
-
+            em.persist(member);
 
             tx.commit();
 
