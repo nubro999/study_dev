@@ -20,8 +20,7 @@ class MemberServiceTest {
 
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
-    @Autowired
-    EntityManager em;
+    @Autowired EntityManager em;
 
     @Test
     @Rollback(false)
@@ -29,6 +28,7 @@ class MemberServiceTest {
         //given
         Member member = new Member();
         member.setName("kim");
+
         //when
         Long savedId = memberService.join(member);
         //then
@@ -38,6 +38,19 @@ class MemberServiceTest {
 
     @Test
     public void 중복_회원_예외() throws Exception {
+        Member member1 = new Member();
+        member1.setName("kim");
+
+        Member member2 = new Member();
+        member2.setName("kim");
+
+        memberService.join(member1);
+        try{
+            memberService.join(member2);
+        }catch(IllegalStateException e){
+            return;
+        }
+        fail("에외발생해야함");
 
     }
 
